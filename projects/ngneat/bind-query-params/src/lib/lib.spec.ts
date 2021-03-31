@@ -167,7 +167,7 @@ describe('BindQueryParams', () => {
 
         tick();
 
-        expect(router.navigate).not.toHaveBeenCalled();
+        assertRouterCall(spectator, { searchTerm: 'term' });
 
         spectator.component.group.patchValue({
           withMinlengthValidator: 'with1',

@@ -33,13 +33,8 @@ export class BindQueryParamsManager<T = any> {
     const controls = this.defs.map((def) => {
       const control = this.group.get(def.path)!;
       return control.valueChanges.pipe(
-        debounceTime(0),
         filter(() => {
-          if (this.options.ignoreInvalidForm) {
-            return this.group.valid;
-          }
-
-          if (def.ignoreInvalidForm) {
+          if (this.options.ignoreInvalidForm || def.ignoreInvalidForm) {
             return control.valid;
           }
 

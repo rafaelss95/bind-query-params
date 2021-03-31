@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BindQueryParamsFactory } from '@ngneat/bind-query-params';
 import { startWith } from 'rxjs/operators';
 
 interface Params {
+  withMinlengthValidator: string;
   searchTerm: string;
   showErrors: boolean;
   issues: string;
@@ -23,6 +24,7 @@ export class AppComponent {
   title = 'bindQueryParams';
 
   group = new FormGroup({
+    withMinlengthValidator: new FormControl('', Validators.minLength(5)),
     searchTerm: new FormControl(),
     showErrors: new FormControl(false),
     issues: new FormControl([]),
@@ -38,6 +40,7 @@ export class AppComponent {
 
   private manager = this.factory
     .create<Params>([
+      { queryKey: 'withMinlengthValidator', ignoreInvalidForm: true },
       { queryKey: 'searchTerm' },
       { queryKey: 'showErrors', type: 'boolean' },
       { queryKey: 'issues', strategy: 'modelToUrl', type: 'array' },
